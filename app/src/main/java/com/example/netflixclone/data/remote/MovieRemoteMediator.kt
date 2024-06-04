@@ -24,13 +24,8 @@ class MovieRemoteMediator(
         val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
 
         return if (System.currentTimeMillis() - (movieDb.remoteKeysDao().getCreationTime() ?: 0) < cacheTimeout) {
-            // Cached data is up-to-date, so there is no need to re-fetch
-            // from the network.
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
-            // Need to refresh cached data from network; returning
-            // LAUNCH_INITIAL_REFRESH here will also block RemoteMediator's
-            // APPEND and PREPEND from running until REFRESH succeeds.
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }

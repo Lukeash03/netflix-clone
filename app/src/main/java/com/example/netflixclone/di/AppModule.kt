@@ -6,8 +6,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.example.netflixclone.common.Constants
+import com.example.netflixclone.data.local.MovieDao
 import com.example.netflixclone.data.local.MovieDatabase
 import com.example.netflixclone.data.local.MovieEntity
+import com.example.netflixclone.data.local.RemoteKeysDao
 import com.example.netflixclone.data.remote.MovieApi
 import com.example.netflixclone.data.remote.MovieRemoteMediator
 import com.example.netflixclone.data.repository.MovieRepositoryImpl
@@ -39,11 +41,21 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase {
-        return Room.databaseBuilder(
-            context,
-            MovieDatabase::class.java,
-            "movies.db"
-        ).build()
+        return Room
+            .databaseBuilder(context, MovieDatabase::class.java, "movies.db")
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoviesDao(movieDb: MovieDatabase): MovieDao {
+        return movieDb.movieDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteKeysDao(movieDb: MovieDatabase): RemoteKeysDao {
+        return movieDb.remoteKeysDao()
     }
 
     @OptIn(ExperimentalPagingApi::class)
