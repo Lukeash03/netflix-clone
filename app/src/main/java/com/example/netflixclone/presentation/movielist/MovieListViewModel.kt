@@ -69,6 +69,7 @@ class MovieListViewModel @Inject constructor(
                     when (categoryId){
                         POPULAR_MOVIES -> _popularMovieState.value =
                         MovieListState(error = result.message ?: "An unexpected error occurred" )
+
                         TRENDING_MOVIES -> _trendingMovieState.value =
                             MovieListState(error = result.message ?: "An unexpected error occurred")
 
@@ -85,6 +86,7 @@ class MovieListViewModel @Inject constructor(
                     when(categoryId){
                         POPULAR_MOVIES -> _popularMovieState.value =
                             MovieListState(isLoading = true )
+
                         TRENDING_MOVIES -> _trendingMovieState.value =
                             MovieListState(isLoading = true)
 
